@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>АбонентМастерПро — Ремонт электрики и сантехники по подписке | Томск</title>
+  <meta name="description" content="Приоритетный ремонт электрики и сантехники по подписке в Томске. Фиксированная цена, быстрый выезд, без сюрпризов.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#fef2f2',
+              100: '#fee2e2',
+              400: '#f87171',
+              500: '#ef4444',
+              600: '#dc2626',
+              700: '#b91c1c',
+              800: '#991b1b',
+            },
+            dark: {
+              800: '#1a1a1a',
+              900: '#0f0f0f',
+              950: '#050505',
+            }
+          },
+          fontFamily: {
+            sans: ['Montserrat', 'Inter', 'system-ui', 'sans-serif'],
+            display: ['Oswald', 'Montserrat', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+    
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: 'Montserrat', system-ui, sans-serif;
+    }
+    
+    h1, .font-display {
+      font-family: 'Oswald', 'Montserrat', sans-serif;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    h2, h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+    
+    .plan-card {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .plan-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+    }
+    .plan-popular {
+      border: 2px solid #ef4444;
+      position: relative;
+      background: linear-gradient(to bottom, #fff, #fef2f2);
+    }
+    .plan-popular::before {
+      content: 'ВЫБОР КЛИЕНТОВ';
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, #b91c1c, #ef4444);
+      color: white;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      padding: 3px 14px;
+      border-radius: 9999px;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.5);
+      font-family: 'Oswald', sans-serif;
+    }
+    
+    .faq-item summary {
+      cursor: pointer;
+      list-style: none;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    
+    .hero-bg {
+      background: 
+        radial-gradient(ellipse 90% 60% at 50% -30%, rgba(239, 68, 68, 0.35), transparent),
+        radial-gradient(ellipse 50% 40% at 80% 20%, rgba(185, 28, 28, 0.2), transparent),
+        linear-gradient(160deg, #050505 0%, #0f0f0f 45%, #1a1a1a 100%);
+    }
+    
+    .glow-red {
+      box-shadow: 0 0 40px rgba(239, 68, 68, 0.45);
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #ef4444, #b91c1c);
+      transition: all 0.2s;
+      font-family: 'Oswald', sans-serif;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #f87171, #ef4444);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -5px rgba(239, 68, 68, 0.6);
+    }
+    
+    .tg-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 100;
+      width: 60px;
+      height: 60px;
+      background: #229ED9;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(34, 158, 217, 0.45);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .tg-float:hover {
+      transform: scale(1.08);
+      box-shadow: 0 12px 32px rgba(34, 158, 217, 0.55);
+    }
+  </style>
+</head>
+<body class="font-sans text-gray-800 bg-neutral-100">
+
+  <!-- Floating Telegram -->
+  <a href="https://t.me/+79016131303" target="_blank" rel="noopener" class="tg-float" title="Написать в Telegram" id="tg-link">
+    <i class="fab fa-telegram-plane text-white text-2xl"></i>
+  </a>
+
+  <!-- Header -->
+  <header class="bg-dark-950/95 backdrop-blur-md sticky top-0 z-50 border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-20 py-2">
+        <a href="#" class="flex items-center gap-3">
+          <div class="w-11 h-11 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl flex items-center justify-center shadow-lg glow-red flex-shrink-0">
+            <i class="fas fa-bolt text-white text-lg"></i>
+          </div>
+          <div class="leading-tight">
+            <div class="font-black text-lg tracking-tight text-white">Абонент<span class="text-brand-500">МастерПро</span></div>
+            <div class="text-[10px] text-slate-400 font-medium tracking-wide uppercase">Электрика · Сантехника</div>
+          </div>
+        </a>
+        
+        <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-300">
+          <a href="#how" class="hover:text-brand-400 transition">Как работает</a>
+          <a href="#plans" class="hover:text-brand-400 transition">Тарифы</a>
+          <a href="#benefits" class="hover:text-brand-400 transition">Преимущества</a>
+          <a href="#faq" class="hover:text-brand-400 transition">Вопросы</a>
+        </nav>
+        
+        <div class="flex items-center gap-3">
+          <a href="tel:+79016131303" class="hidden sm:flex items-center gap-2 text-sm font-bold text-white">
+            <i class="fas fa-phone text-brand-500"></i>
+            +7 901 613-13-03
+          </a>
+          <a href="#contact" class="btn-primary text-white text-sm font-bold px-5 py-2.5 rounded-xl shadow-lg">
+            Заявка
+          </a>
+          <button id="mobile-menu-btn" class="md:hidden p-2 text-white">
+            <i class="fas fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-white/10 bg-dark-900">
+      <div class="px-4 py-4 space-y-1">
+        <a href="#how" class="block py-2.5 text-slate-200 font-medium">Как работает</a>
+        <a href="#plans" class="block py-2.5 text-slate-200 font-medium">Тарифы</a>
+        <a href="#benefits" class="block py-2.5 text-slate-200 font-medium">Преимущества</a>
+        <a href="#faq" class="block py-2.5 text-slate-200 font-medium">Вопросы</a>
+        <a href="tel:+79016131303" class="block py-2.5 text-brand-400 font-bold">+7 901 613-13-03</a>
+        <a href="https://t.me/+79016131303" target="_blank" class="block py-2.5 text-[#229ED9] font-bold">
+          <i class="fab fa-telegram-plane mr-1"></i> Telegram
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero-bg text-white overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24 relative">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <div class="inline-flex items-center gap-2 bg-brand-500/20 border border-brand-500/40 backdrop-blur px-3.5 py-1.5 rounded-full text-sm font-semibold text-brand-300 mb-6">
+            <span class="w-2 h-2 bg-brand-400 rounded-full animate-pulse"></span>
+            Томск · Выезд от 60 минут
+          </div>
+          <h1 class="text-4xl sm:text-5xl md:text-[3.25rem] font-black leading-[1.1] mb-5 tracking-tight">
+            Ремонт электрики<br>и сантехники<br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-brand-600">по подписке</span>
+          </h1>
+          <p class="text-lg text-slate-300 mb-8 max-w-md leading-relaxed">
+            Фиксированная плата. Приоритетный выезд. Без неожиданных счетов и поиска мастера в момент аварии.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a href="#plans" class="btn-primary inline-flex items-center justify-center gap-2 text-white font-bold px-7 py-4 rounded-xl text-base shadow-xl">
+              Смотреть тарифы
+              <i class="fas fa-arrow-right text-sm"></i>
+            </a>
+            <a href="https://t.me/+79016131303" target="_blank" class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold px-7 py-4 rounded-xl transition backdrop-blur">
+              <i class="fab fa-telegram-plane text-[#229ED9]"></i>
+              Написать в Telegram
+            </a>
+          </div>
+          
+          <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-slate-400">
+            <div class="flex items-center gap-2">
+              <i class="fas fa-shield-alt text-brand-500"></i>
+              <span>Договор + гарантия</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="fas fa-bolt text-brand-500"></i>
+              <span>Приоритет подписчикам</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="fas fa-map-marker-alt text-brand-500"></i>
+              <span>Томск и область</span>
+            </div>
+          </div>
+
+          <!-- Mobile photo -->
+          <div class="mt-8 md:hidden">
+            <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+              <img src="master-photo.jpg" alt="Мастер АбонентМастерПро" class="w-full h-auto object-cover max-h-[360px]">
+              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                <div class="text-white font-bold">Ваш персональный мастер</div>
+                <div class="text-slate-300 text-sm">Электрика · Сантехника · Томск</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="hidden md:block relative">
+          <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 glow-red">
+            <img src="master-photo.jpg" alt="Мастер АбонентМастерПро" class="w-full h-auto object-cover max-h-[480px]">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-5">
+              <div class="text-white font-bold text-lg">Ваш персональный мастер</div>
+              <div class="text-slate-300 text-sm">Электрика · Сантехника · Томск</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust bar -->
+  <section class="bg-dark-900 border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 py-7">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div>
+          <div class="text-2xl font-black text-brand-500">60 мин</div>
+          <div class="text-sm text-slate-400 mt-1">Среднее время выезда</div>
+        </div>
+        <div>
+          <div class="text-2xl font-black text-brand-500">Приоритет</div>
+          <div class="text-sm text-slate-400 mt-1">Подписчики — первыми</div>
+        </div>
+        <div>
+          <div class="text-2xl font-black text-brand-500">Договор</div>
+          <div class="text-sm text-slate-400 mt-1">Прозрачные условия</div>
+        </div>
+        <div>
+          <div class="text-2xl font-black text-brand-500">Гарантия</div>
+          <div class="text-sm text-slate-400 mt-1">На все работы</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section id="how" class="py-16 md:py-20 bg-slate-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-black text-dark-900 mb-3">Как это работает</h2>
+        <p class="text-slate-600 max-w-xl mx-auto">Четыре шага. Без лишней бюрократии.</p>
+      </div>
+      
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 text-center relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-500 to-brand-600"></div>
+          <div class="w-12 h-12 bg-brand-500 text-white rounded-xl flex items-center justify-center text-lg font-black mx-auto mb-4">1</div>
+          <h3 class="font-bold text-lg mb-2 text-dark-900">Выбираете тариф</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">Для квартиры, дома или бизнеса. Можно начать с базового.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 text-center relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-500 to-brand-600"></div>
+          <div class="w-12 h-12 bg-brand-500 text-white rounded-xl flex items-center justify-center text-lg font-black mx-auto mb-4">2</div>
+          <h3 class="font-bold text-lg mb-2 text-dark-900">Первичный осмотр</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">Мастер фиксирует состояние электрики и сантехники. Всё по акту.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 text-center relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-500 to-brand-600"></div>
+          <div class="w-12 h-12 bg-brand-500 text-white rounded-xl flex items-center justify-center text-lg font-black mx-auto mb-4">3</div>
+          <h3 class="font-bold text-lg mb-2 text-dark-900">Подключаем подписку</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">Договор. Приоритет. Понятные правила без мелкого шрифта.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 text-center relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-500 to-brand-600"></div>
+          <div class="w-12 h-12 bg-brand-500 text-white rounded-xl flex items-center justify-center text-lg font-black mx-auto mb-4">4</div>
+          <h3 class="font-bold text-lg mb-2 text-dark-900">Звоните — приезжаем</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">Подписчики обслуживаются первыми. Мелкий ремонт уже включён.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plans -->
+  <section id="plans" class="py-16 md:py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl md:text-4xl font-black text-dark-900 mb-3">Тарифы</h2>
+        <p class="text-slate-600 max-w-xl mx-auto">Количество выездов в месяц. Если лимит закончился — дальнейшие работы со скидкой 50%. На все работы — гарантия.</p>
+      </div>
+      
+      <!-- Period selector -->
+      <div class="flex justify-center mb-8">
+        <div class="inline-flex flex-wrap justify-center bg-slate-100 rounded-2xl p-1.5 gap-1" id="period-selector">
+          <button data-period="1" class="period-btn px-4 py-2.5 rounded-xl text-sm font-bold bg-white shadow-md text-dark-900 transition">1 месяц</button>
+          <button data-period="3" class="period-btn px-4 py-2.5 rounded-xl text-sm font-bold text-slate-500 hover:text-dark-900 transition">3 месяца</button>
+          <button data-period="6" class="period-btn px-4 py-2.5 rounded-xl text-sm font-bold text-slate-500 hover:text-dark-900 transition">6 месяцев</button>
+          <button data-period="12" class="period-btn px-4 py-2.5 rounded-xl text-sm font-bold text-slate-500 hover:text-dark-900 transition">1 год</button>
+        </div>
+      </div>
+      
+      <!-- Tabs -->
+      <div class="flex justify-center mb-10">
+        <div class="inline-flex bg-slate-100 rounded-2xl p-1.5">
+          <button id="tab-private" class="tab-btn px-6 py-2.5 rounded-xl text-sm font-bold bg-white shadow-md text-dark-900 transition">
+            Квартиры и дома
+          </button>
+          <button id="tab-business" class="tab-btn px-6 py-2.5 rounded-xl text-sm font-bold text-slate-500 hover:text-dark-900 transition">
+            Бизнес
+          </button>
+        </div>
+      </div>
+      
+      <!-- Private plans -->
+      <div id="plans-private" class="grid md:grid-cols-3 gap-6">
+        <!-- Basic -->
+        <div class="plan-card bg-slate-50 rounded-2xl p-6 border border-slate-200">
+          <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Базовый</div>
+          <div class="flex items-baseline gap-1 mb-1">
+            <span class="text-4xl font-black text-dark-900 price-main" data-base="2990">2 990</span>
+            <span class="text-slate-500 font-medium">₽/мес</span>
+          </div>
+          <p class="text-sm text-brand-600 font-semibold mb-1 total-price hidden"></p>
+          <p class="text-sm text-slate-500 mb-6">Для квартиры или небольшого дома</p>
+          
+          <ul class="space-y-3 mb-8 text-sm">
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span><strong>3 выезда</strong> в месяц</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>После лимита — <strong>скидка 50%</strong></span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>Приоритетный выезд</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>Бесплатная диагностика</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>Гарантия на все работы</span>
+            </li>
+          </ul>
+          
+          <a href="#contact" class="block text-center w-full py-3.5 rounded-xl border-2 border-dark-900 text-dark-900 font-bold hover:bg-dark-900 hover:text-white transition">
+            Выбрать
+          </a>
+        </div>
+        
+        <!-- Standard -->
+        <div class="plan-card plan-popular rounded-2xl p-6 shadow-xl">
+          <div class="text-xs font-bold uppercase tracking-wider text-brand-600 mb-2">Стандарт</div>
+          <div class="flex items-baseline gap-1 mb-1">
+            <span class="text-4xl font-black text-dark-900 price-main" data-base="4990">4 990</span>
+            <span class="text-slate-500 font-medium">₽/мес</span>
+          </div>
+          <p class="text-sm text-brand-600 font-semibold mb-1 total-price hidden"></p>
+          <p class="text-sm text-slate-500 mb-6">Самый популярный выбор</p>
+          
+          <ul class="space-y-3 mb-8 text-sm">
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span><strong>5 выездов</strong> в месяц</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>После лимита — <strong>скидка 50%</strong></span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>Всё из «Базового» + скидка 10% на материалы</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>Приоритет в выходные</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>Гарантия на все работы</span>
+            </li>
+          </ul>
+          
+          <a href="#contact" class="btn-primary block text-center w-full py-3.5 rounded-xl text-white font-bold shadow-lg">
+            Выбрать
+          </a>
+        </div>
+        
+        <!-- Premium -->
+        <div class="plan-card bg-slate-50 rounded-2xl p-6 border border-slate-200">
+          <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Премиум</div>
+          <div class="flex items-baseline gap-1 mb-1">
+            <span class="text-4xl font-black text-dark-900 price-main" data-base="8990">8 990</span>
+            <span class="text-slate-500 font-medium">₽/мес</span>
+          </div>
+          <p class="text-sm text-brand-600 font-semibold mb-1 total-price hidden"></p>
+          <p class="text-sm text-slate-500 mb-6">Максимум спокойствия</p>
+          
+          <ul class="space-y-3 mb-8 text-sm">
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span><strong>10 выездов</strong> в месяц</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>После лимита — <strong>скидка 50%</strong></span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>Ночные и праздничные без наценки</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>Персональный мастер + 2 профилактики</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>Гарантия на все работы</span>
+            </li>
+          </ul>
+          
+          <a href="#contact" class="block text-center w-full py-3.5 rounded-xl border-2 border-dark-900 text-dark-900 font-bold hover:bg-dark-900 hover:text-white transition">
+            Выбрать
+          </a>
+        </div>
+      </div>
+      
+      <!-- Business plans -->
+      <div id="plans-business" class="hidden grid md:grid-cols-3 gap-6">
+        <!-- Business Light -->
+        <div class="plan-card bg-slate-50 rounded-2xl p-6 border border-slate-200">
+          <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Бизнес Light</div>
+          <div class="flex items-baseline gap-1 mb-1">
+            <span class="text-4xl font-black text-dark-900 price-main" data-base="11990">11 990</span>
+            <span class="text-slate-500 font-medium">₽/мес</span>
+          </div>
+          <p class="text-sm text-brand-600 font-semibold mb-1 total-price hidden"></p>
+          <p class="text-sm text-slate-500 mb-6">Небольшие офисы, точки, кафе</p>
+          
+          <ul class="space-y-3 mb-8 text-sm">
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span><strong>4 выезда</strong> в месяц</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>После лимита — <strong>скидка 50%</strong></span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>Реакция на аварию до 4 часов</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>Приоритет перед частными клиентами</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>Закрывающие документы для бухгалтерии</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-star text-brand-500 mt-0.5"></i>
+              <span><strong>Скидка 40% сотрудникам</strong> на личные заказы электрика и сантехника</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>Гарантия на все работы</span>
+            </li>
+          </ul>
+          
+          <a href="#contact" class="block text-center w-full py-3.5 rounded-xl border-2 border-dark-900 text-dark-900 font-bold hover:bg-dark-900 hover:text-white transition">
+            Оставить заявку
+          </a>
+        </div>
+        
+        <!-- Business Standard -->
+        <div class="plan-card plan-popular rounded-2xl p-6 shadow-xl">
+          <div class="text-xs font-bold uppercase tracking-wider text-brand-600 mb-2">Бизнес Стандарт</div>
+          <div class="flex items-baseline gap-1 mb-1">
+            <span class="text-4xl font-black text-dark-900 price-main" data-base="19990">19 990</span>
+            <span class="text-slate-500 font-medium">₽/мес</span>
+          </div>
+          <p class="text-sm text-brand-600 font-semibold mb-1 total-price hidden"></p>
+          <p class="text-sm text-slate-500 mb-6">Офисы, магазины, сети точек</p>
+          
+          <ul class="space-y-3 mb-8 text-sm">
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span><strong>6 выездов</strong> в месяц</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>После лимита — <strong>скидка 50%</strong></span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>Реакция на аварию до 3 часов · приоритет 24/7</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>Ежемесячный отчёт + рекомендации по профилактике</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>Фиксированная стоимость доп. работ</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-star text-brand-500 mt-0.5"></i>
+              <span><strong>Скидка 40% сотрудникам</strong> на личные заказы электрика и сантехника</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>Гарантия на все работы</span>
+            </li>
+          </ul>
+          
+          <a href="#contact" class="btn-primary block text-center w-full py-3.5 rounded-xl text-white font-bold shadow-lg">
+            Оставить заявку
+          </a>
+        </div>
+        
+        <!-- Business Pro -->
+        <div class="plan-card bg-slate-50 rounded-2xl p-6 border border-slate-200">
+          <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Бизнес Про</div>
+          <div class="flex items-baseline gap-1 mb-1">
+            <span class="text-4xl font-black text-dark-900 price-main" data-base="29990">29 990</span>
+            <span class="text-slate-500 font-medium">₽/мес</span>
+          </div>
+          <p class="text-sm text-brand-600 font-semibold mb-1 total-price hidden"></p>
+          <p class="text-sm text-slate-500 mb-6">Крупные объекты, УК, сети</p>
+          
+          <ul class="space-y-3 mb-8 text-sm">
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span><strong>11 выездов</strong> в месяц</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>Выделенная бригада + персональный менеджер</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>Жёсткий SLA · несколько объектов по одному договору</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>Полный пакет закрывающих документов</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-star text-brand-500 mt-0.5"></i>
+              <span><strong>Скидка 40% сотрудникам</strong> на личные заказы электрика и сантехника</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-check text-brand-500 mt-0.5"></i>
+              <span>Гарантия на все работы</span>
+            </li>
+          </ul>
+          
+          <a href="#contact" class="block text-center w-full py-3.5 rounded-xl border-2 border-dark-900 text-dark-900 font-bold hover:bg-dark-900 hover:text-white transition">
+            Обсудить условия
+          </a>
+        </div>
+      </div>
+      
+      <p class="text-center text-sm text-slate-500 mt-8 max-w-2xl mx-auto">
+        * Материалы оплачиваются отдельно. Капитальные работы — по отдельной смете. На все выполненные работы действует гарантия. Перед подключением — обязательный осмотр.
+      </p>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section id="benefits" class="py-16 md:py-20 bg-slate-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-black text-dark-900 mb-3">Почему подписка выгоднее</h2>
+        <p class="text-slate-600 max-w-xl mx-auto">Разовый вызов в пятницу вечером почти всегда дороже месячной подписки.</p>
+      </div>
+      
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <div class="w-12 h-12 bg-brand-100 text-brand-600 rounded-xl flex items-center justify-center text-xl mb-4">
+            <i class="fas fa-wallet"></i>
+          </div>
+          <h3 class="font-bold text-lg mb-2 text-dark-900">Предсказуемые расходы</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">Точно знаете, сколько потратите на электрику и сантехнику. Без сюрпризов в конце месяца.</p>
+        </div>
+        
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center text-xl mb-4">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <h3 class="font-bold text-lg mb-2 text-dark-900">Приоритетный выезд</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">Подписчики едут первыми. Особенно важно при авариях и в выходные.</p>
+        </div>
+        
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-xl mb-4">
+            <i class="fas fa-tools"></i>
+          </div>
+          <h3 class="font-bold text-lg mb-2 text-dark-900">Профилактика вместо аварий</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">Регулярные осмотры находят проблемы до того, как они становятся дорогими.</p>
+        </div>
+        
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <div class="w-12 h-12 bg-violet-100 text-violet-600 rounded-xl flex items-center justify-center text-xl mb-4">
+            <i class="fas fa-file-contract"></i>
+          </div>
+          <h3 class="font-bold text-lg mb-2 text-dark-900">Прозрачный договор</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">Чётко прописано, что входит. Никаких «а это уже не входит» на месте.</p>
+        </div>
+        
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <div class="w-12 h-12 bg-rose-100 text-rose-600 rounded-xl flex items-center justify-center text-xl mb-4">
+            <i class="fas fa-user-check"></i>
+          </div>
+          <h3 class="font-bold text-lg mb-2 text-dark-900">Свои мастера</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">Не случайные люди с Авито. Постоянные специалисты, которые отвечают за результат.</p>
+        </div>
+        
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <div class="w-12 h-12 bg-sky-100 text-sky-600 rounded-xl flex items-center justify-center text-xl mb-4">
+            <i class="fas fa-headset"></i>
+          </div>
+          <h3 class="font-bold text-lg mb-2 text-dark-900">Один номер — всё</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">Электрика и сантехника в одном сервисе. Не нужно искать разных мастеров.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What is included -->
+  <section class="py-16 md:py-20 bg-dark-950 text-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="grid md:grid-cols-2 gap-12 items-start">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-black mb-4">Что входит в подписку</h2>
+          <p class="text-slate-400 mb-8 leading-relaxed">Типовые работы, которые случаются чаще всего. Капитальные и сложные — отдельно по смете.</p>
+          
+          <div class="grid sm:grid-cols-2 gap-6">
+            <div>
+              <h4 class="font-bold text-brand-400 mb-3 flex items-center gap-2">
+                <i class="fas fa-faucet"></i> Сантехника
+              </h4>
+              <ul class="text-sm text-slate-300 space-y-2">
+                <li class="flex gap-2"><span class="text-brand-500">•</span> Устранение течей</li>
+                <li class="flex gap-2"><span class="text-brand-500">•</span> Замена смесителей и сифонов</li>
+                <li class="flex gap-2"><span class="text-brand-500">•</span> Прочистка засоров</li>
+                <li class="flex gap-2"><span class="text-brand-500">•</span> Ремонт сливных бачков</li>
+                <li class="flex gap-2"><span class="text-brand-500">•</span> Замена гибкой подводки</li>
+                <li class="flex gap-2"><span class="text-brand-500">•</span> Установка фильтров</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-bold text-brand-400 mb-3 flex items-center gap-2">
+                <i class="fas fa-bolt"></i> Электрика
+              </h4>
+              <ul class="text-sm text-slate-300 space-y-2">
+                <li class="flex gap-2"><span class="text-brand-500">•</span> Замена розеток и выключателей</li>
+                <li class="flex gap-2"><span class="text-brand-500">•</span> Замена автоматов</li>
+                <li class="flex gap-2"><span class="text-brand-500">•</span> Поиск обрывов и КЗ</li>
+                <li class="flex gap-2"><span class="text-brand-500">•</span> Монтаж светильников</li>
+                <li class="flex gap-2"><span class="text-brand-500">•</span> Диагностика щитов</li>
+                <li class="flex gap-2"><span class="text-brand-500">•</span> Мелкий ремонт проводки</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white/5 backdrop-blur rounded-2xl p-6 border border-white/10">
+          <h3 class="font-bold text-lg mb-5 text-brand-400">Что не входит</h3>
+          <ul class="space-y-4 text-sm text-slate-300">
+            <li class="flex items-start gap-3">
+              <i class="fas fa-times-circle text-brand-500 mt-0.5 flex-shrink-0"></i>
+              <span>Капитальная замена стояков и магистральных труб</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fas fa-times-circle text-brand-500 mt-0.5 flex-shrink-0"></i>
+              <span>Полная замена электропроводки в квартире/доме</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fas fa-times-circle text-brand-500 mt-0.5 flex-shrink-0"></i>
+              <span>Работы на общедомовом имуществе (без согласования с УК)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fas fa-times-circle text-brand-500 mt-0.5 flex-shrink-0"></i>
+              <span>Повреждения по вине клиента или третьих лиц</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fas fa-times-circle text-brand-500 mt-0.5 flex-shrink-0"></i>
+              <span>Материалы и оборудование (оплачиваются отдельно)</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="py-16 md:py-20 bg-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl md:text-4xl font-black text-dark-900 mb-3">Частые вопросы</h2>
+      </div>
+      
+      <div class="space-y-3">
+        <details class="faq-item bg-slate-50 rounded-xl border border-slate-200 group">
+          <summary class="flex items-center justify-between p-5 font-bold text-dark-900">
+            Можно ли отменить подписку?
+            <i class="fas fa-chevron-down text-slate-400 group-open:rotate-180 transition"></i>
+          </summary>
+          <div class="px-5 pb-5 text-slate-600 text-sm leading-relaxed">
+            Да. Можно приостановить или отменить с уведомлением за 14 дней. Оплаченный период не возвращается, но вы можете использовать его до конца.
+          </div>
+        </details>
+        
+        <details class="faq-item bg-slate-50 rounded-xl border border-slate-200 group">
+          <summary class="flex items-center justify-between p-5 font-bold text-dark-900">
+            Почему нужен первичный осмотр?
+            <i class="fas fa-chevron-down text-slate-400 group-open:rotate-180 transition"></i>
+          </summary>
+          <div class="px-5 pb-5 text-slate-600 text-sm leading-relaxed">
+            Оцениваем реальное состояние систем. Это защищает и вас, и нас: вы получаете понятные условия, мы не берём аварийные объекты без отдельного согласования.
+          </div>
+        </details>
+        
+        <details class="faq-item bg-slate-50 rounded-xl border border-slate-200 group">
+          <summary class="flex items-center justify-between p-5 font-bold text-dark-900">
+            Что если выездов не хватит?
+            <i class="fas fa-chevron-down text-slate-400 group-open:rotate-180 transition"></i>
+          </summary>
+          <div class="px-5 pb-5 text-slate-600 text-sm leading-relaxed">
+            Все дополнительные выезды после исчерпания месячного лимита — со скидкой <strong>50%</strong> на работы. На все выполненные работы действует гарантия. Стоимость всегда согласовывается заранее.
+          </div>
+        </details>
+        
+        <details class="faq-item bg-slate-50 rounded-xl border border-slate-200 group">
+          <summary class="flex items-center justify-between p-5 font-bold text-dark-900">
+            Работаете с юридическими лицами?
+            <i class="fas fa-chevron-down text-slate-400 group-open:rotate-180 transition"></i>
+          </summary>
+          <div class="px-5 pb-5 text-slate-600 text-sm leading-relaxed">
+            Да. Для бизнеса — отдельные пакеты с большим объёмом выездов, SLA и отчётностью. Работаем по договору с закрывающими документами.
+          </div>
+        </details>
+        
+        <details class="faq-item bg-slate-50 rounded-xl border border-slate-200 group">
+          <summary class="flex items-center justify-between p-5 font-bold text-dark-900">
+            Какие гарантии?
+            <i class="fas fa-chevron-down text-slate-400 group-open:rotate-180 transition"></i>
+          </summary>
+          <div class="px-5 pb-5 text-slate-600 text-sm leading-relaxed">
+            На все выполненные работы действует гарантия. Срок зависит от вида работ и указывается в акте. Материалы — по гарантии производителя.
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-16 md:py-20 bg-slate-100">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="grid md:grid-cols-2 gap-10 items-start">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-black text-dark-900 mb-4">Оставьте заявку</h2>
+          <p class="text-slate-600 mb-8 leading-relaxed">Перезвоним быстро в рабочее время, ответим на вопросы и подберём тариф под ваш объект.</p>
+          
+          <div class="space-y-5">
+            <a href="tel:+79016131303" class="flex items-center gap-4 group">
+              <div class="w-12 h-12 bg-brand-500 text-white rounded-xl flex items-center justify-center group-hover:scale-105 transition">
+                <i class="fas fa-phone"></i>
+              </div>
+              <div>
+                <div class="text-sm text-slate-500">Телефон</div>
+                <div class="font-bold text-lg text-dark-900">+7 901 613-13-03</div>
+              </div>
+            </a>
+            <a href="https://t.me/+79016131303" target="_blank" class="flex items-center gap-4 group">
+              <div class="w-12 h-12 bg-[#229ED9] text-white rounded-xl flex items-center justify-center group-hover:scale-105 transition">
+                <i class="fab fa-telegram-plane text-xl"></i>
+              </div>
+              <div>
+                <div class="text-sm text-slate-500">Telegram</div>
+                <div class="font-bold text-lg text-dark-900">Написать в мессенджер</div>
+              </div>
+            </a>
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-slate-700 text-white rounded-xl flex items-center justify-center">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div>
+                <div class="text-sm text-slate-500">География</div>
+                <div class="font-bold text-lg text-dark-900">Томск и Томская область</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-slate-200">
+          <form id="contact-form" class="space-y-4">
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-1.5">Имя</label>
+              <input type="text" name="name" required placeholder="Как к вам обращаться"
+                class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition">
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-1.5">Телефон</label>
+              <input type="tel" name="phone" required placeholder="+7 (___) ___-__-__"
+                class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition">
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-1.5">Тип объекта</label>
+              <select name="type" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition">
+                <option value="apartment">Квартира</option>
+                <option value="house">Частный дом</option>
+                <option value="office">Офис / бизнес</option>
+                <option value="other">Другое</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-1.5">Комментарий</label>
+              <textarea name="message" rows="3" placeholder="Например: интересует тариф Стандарт"
+                class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition resize-none"></textarea>
+            </div>
+            <button type="submit" class="btn-primary w-full text-white font-bold py-3.5 rounded-xl shadow-lg">
+              Отправить заявку
+            </button>
+            <p class="text-xs text-slate-500 text-center">
+              Нажимая кнопку, вы соглашаетесь на обработку персональных данных
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark-950 text-slate-400 py-10 border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl flex items-center justify-center flex-shrink-0">
+            <i class="fas fa-bolt text-white text-base"></i>
+          </div>
+          <div class="font-black text-white text-lg">Абонент<span class="text-brand-500">МастерПро</span></div>
+        </div>
+        <div class="text-sm text-center">
+          © 2026 АбонентМастерПро · Томск. Ремонт электрики и сантехники по подписке.
+        </div>
+        <div class="flex gap-5 text-sm">
+          <a href="#" class="hover:text-white transition">Политика конфиденциальности</a>
+          <a href="#" class="hover:text-white transition">Оферта</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+    });
+    
+    // Tabs
+    const tabPrivate = document.getElementById('tab-private');
+    const tabBusiness = document.getElementById('tab-business');
+    const plansPrivate = document.getElementById('plans-private');
+    const plansBusiness = document.getElementById('plans-business');
+    
+    tabPrivate.addEventListener('click', () => {
+      tabPrivate.classList.add('bg-white', 'shadow-md', 'text-dark-900');
+      tabPrivate.classList.remove('text-slate-500');
+      tabBusiness.classList.remove('bg-white', 'shadow-md', 'text-dark-900');
+      tabBusiness.classList.add('text-slate-500');
+      plansPrivate.classList.remove('hidden');
+      plansBusiness.classList.add('hidden');
+    });
+    
+    tabBusiness.addEventListener('click', () => {
+      tabBusiness.classList.add('bg-white', 'shadow-md', 'text-dark-900');
+      tabBusiness.classList.remove('text-slate-500');
+      tabPrivate.classList.remove('bg-white', 'shadow-md', 'text-dark-900');
+      tabPrivate.classList.add('text-slate-500');
+      plansBusiness.classList.remove('hidden');
+      plansPrivate.classList.add('hidden');
+    });
+    
+    // Period selector (discounts for longer terms)
+    const discounts = { 1: 0, 3: 0.10, 6: 0.18, 12: 0.25 };
+    const periodLabels = { 1: '₽/мес', 3: '₽/мес', 6: '₽/мес', 12: '₽/мес' };
+    
+    function formatPrice(num) {
+      return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    }
+    
+    function updatePrices(period) {
+      document.querySelectorAll('.price-main').forEach(el => {
+        const base = parseInt(el.dataset.base);
+        const discount = discounts[period];
+        const monthly = Math.round(base * (1 - discount));
+        const isFrom = el.textContent.trim().startsWith('от') || el.dataset.from === '1';
+        el.dataset.from = isFrom ? '1' : '0';
+        el.textContent = (isFrom ? 'от ' : '') + formatPrice(monthly);
+        
+        const totalEl = el.closest('.plan-card').querySelector('.total-price');
+        if (period > 1) {
+          const total = monthly * period;
+          totalEl.textContent = `Итого за ${period === 12 ? 'год' : period + ' мес'}: ${isFrom ? 'от ' : ''}${formatPrice(total)} ₽`;
+          totalEl.classList.remove('hidden');
+        } else {
+          totalEl.classList.add('hidden');
+        }
+      });
+      
+      // Update active button
+      document.querySelectorAll('.period-btn').forEach(btn => {
+        if (btn.dataset.period == period) {
+          btn.classList.add('bg-white', 'shadow-md', 'text-dark-900');
+          btn.classList.remove('text-slate-500');
+        } else {
+          btn.classList.remove('bg-white', 'shadow-md', 'text-dark-900');
+          btn.classList.add('text-slate-500');
+        }
+      });
+    }
+    
+    document.querySelectorAll('.period-btn').forEach(btn => {
+      btn.addEventListener('click', () => updatePrices(parseInt(btn.dataset.period)));
+    });
+    
+    // Form
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = this.querySelector('button[type="submit"]');
+      const originalText = btn.textContent;
+      btn.textContent = 'Отправлено ✓';
+      btn.disabled = true;
+      btn.classList.add('opacity-90');
+      
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.disabled = false;
+        btn.classList.remove('opacity-90');
+        this.reset();
+      }, 2800);
+    });
+  </script>
+</body>
+</html>
